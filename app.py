@@ -15,7 +15,7 @@ load_dotenv()
 
 machine = TocMachine(
     states = [
-        "user",
+        "user", "restart",
         "preview1", "preview2", "preview3",
         "help", "helpnt", 
         "s1", "s1p2", "alice1", "inAlice1", "wolf1", "match1", "snow1", "katniss1", "baba1", "wake1",
@@ -47,6 +47,48 @@ machine = TocMachine(
         "end"
     ],
     transitions = [
+
+        # restart ###############################################################################################
+        {
+            "trigger": "advance",
+            "source": 
+            [
+                "preview1", "preview2", "preview3",
+                "help", "helpnt", 
+                "s1", "s1p2", "alice1", "inAlice1", "wolf1", "match1", "snow1", "katniss1", "baba1", "wake1",
+                "s2", "s2p2", "LRRH2", "inLRRH2", "wolf2", "match2", "snow2", "katniss2", "baba2", "wake2",
+                "s3", "s3p2", "LRRH3", "inLRRH3", "wolf3", "match3", "snow3", "katniss3", "baba3", "wake3", "story3",
+                "s4", "match4", "inMatch4", "paper4", "wolf4", "snow4", 
+                "s5", "baba5", "inBaba5", "alice5", "match5", "katniss5",
+                "s6", "alice6", "match6", "katniss6", "wizard6",
+                "s7", "wolf7", "snow7", "inSnow7", "LRRH7", "inLRRH7", "sandwich7", "inSandwich7", "aliceFail",
+                "katniss7", "inKatniss7", "apple7", "inApple7", "aliceSuc", "meat7", "inMeat7", "reject7",
+                "s8", "wizard8", "match8", "baba8",
+                "s9", "katniss9", "inKatniss9", "wolf9", "baba9",
+                "s10", "wolf10", "match10", "baba10", "snow10", "inSnow10",
+                "s11", "katniss11", "LRRH11", "inLRRH11", "baba11", "match11",
+                "s12", "snow12", "katniss12", "inKatniss12", "apple12", "snowFail", "LRRH12", "inLRRH12", "baba12", "match12",
+                "s13", "snow13", "katniss13", "inKatniss13", "apple13", "snowSuc", "LRRH13", "baba13", "match13",
+                "s14", "wizard14", "baba14", "match14",
+                "s15", "katniss15", "inKatniss15", "baba15", "match15",
+                "s16", "katniss16", "wolf16", "match16", "LRRH16", "inLRRH16",
+                "bomb16", "inBomb16", "katnissFail", "gift16", "inGift16", "pic16", "inPic16", "katnissSuc",
+                "s17", "wolf17", "match17", "baba17", "LRRH17", "inLRRH17",
+                "s18", "wolf18", "baba18", "LRRH18", "inLRRH18", "match18", "matchFail",
+                "s19", "wolf19", "baba19", "LRRH19", "match19", "book19", "matchSuc",
+                "s20", "wolf20", "inWolf20", "baba20", "inBaba20", "LRRH20", "inLRRH20", "poison20", "inPoison20", "babaFail",
+                "sake20", "inSake20", "money20", "babaSuc",
+                "s21", "wolf21", "wolfSuc21", "LRRH21", "LRRHSuc21",
+                "s22", "LRRH22", "LRRHSuc22",
+                "s23", "wolf23", "wolfSuc23",
+                "end"
+             ],
+            "dest": "restart",
+            "conditions": "is_going_to_restart"
+        },
+
+
+
         # preview ###############################################################################################
 
         {"trigger": "advance", "source": "user"    , "dest": "preview1", "conditions": "is_going_to_preview1" },
@@ -711,7 +753,11 @@ machine = TocMachine(
 
 
         # game over ############################################################################################
-        {"trigger": "game_over", "source": ["helpnt", "katnissFail", "matchFail", "babaFail", "end"], "dest": "user"},
+        {
+            "trigger": "game_over",
+            "source": ["helpnt", "katnissFail", "matchFail", "babaFail", "end", "restart"],
+            "dest": "user"
+        }
     ],
     initial = "user",
     auto_transitions = False,

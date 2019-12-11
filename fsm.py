@@ -24,15 +24,39 @@ class TocMachine(GraphMachine):
     def __init__(self, **machine_configs):
         self.machine = GraphMachine(model=self, **machine_configs)
 
+    # restart ##################################################################################################
+    def is_going_to_restart(self, event):
+        text = event.message.text
+        return text.lower() == "restart"
+
+    def on_enter_restart(self, event):
+        button_message = TemplateSendMessage(
+            alt_text = 'Button',
+            template = ButtonsTemplate(
+                thumbnail_image_url = picBg,
+                    title = 'RESTART',
+                    text = '選擇開始繼續',
+                    actions = [
+                        MessageAction(
+                            label = '開始',
+                            text = '開始'
+                        )
+                    ]
+                )
+            )
+        send_button_message(event.reply_token, button_message)
+        self.game_over()
+
+    
+
     # preview ##################################################################################################
 
     ## preivew 1
     def is_going_to_preview1(self, event):
         text = event.message.text
-        return text.lower() == "開始"
+        return text.lower() == "開始" or text.lower() == '重來'
 
     def on_enter_preview1(self, event):
-        print("entering preview1")
         button_message = TemplateSendMessage(
             alt_text = 'Button',
             template = ButtonsTemplate(
@@ -56,7 +80,6 @@ class TocMachine(GraphMachine):
         return text.lower() == "繼續"
 
     def on_enter_preview2(self, event):
-        print("entering preview2")
         button_message = TemplateSendMessage(
             alt_text = 'Button',
             template = ButtonsTemplate(
@@ -80,7 +103,6 @@ class TocMachine(GraphMachine):
         return text.lower() == "繼續"
 
     def on_enter_preview3(self, event):
-        print("entering preview3")
         button_message = TemplateSendMessage(
             alt_text = 'Button',
             template = ButtonsTemplate(
@@ -108,7 +130,6 @@ class TocMachine(GraphMachine):
         return text.lower() == "(去找老巫師)"
 
     def on_enter_help(self, event):
-        print("entering help")
         button_message = TemplateSendMessage(
             alt_text = 'Button',
             template = ButtonsTemplate(
@@ -132,9 +153,21 @@ class TocMachine(GraphMachine):
         return text.lower() == "(無視)"
 
     def on_enter_helpnt(self, event):
-        print("entering helpnt")
-        reply_token = event.reply_token
-        send_text_message(reply_token, "GAME OVER")
+        button_message = TemplateSendMessage(
+            alt_text = 'Button',
+            template = ButtonsTemplate(
+                thumbnail_image_url = picBg,
+                    title = 'GAMEOVER',
+                    text = ' ',
+                    actions = [
+                        MessageAction(
+                            label = '重來',
+                            text = '重來'
+                        )
+                    ]
+                )
+            )
+        send_button_message(event.reply_token, button_message)
         self.game_over()
 
 
