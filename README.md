@@ -1,159 +1,310 @@
-# TOC Project 2020
+# RPG Line Bot
 
-[![Maintainability](https://api.codeclimate.com/v1/badges/dc7fa47fcd809b99d087/maintainability)](https://codeclimate.com/github/NCKU-CCS/TOC-Project-2020/maintainability)
-
-[![Known Vulnerabilities](https://snyk.io/test/github/NCKU-CCS/TOC-Project-2020/badge.svg)](https://snyk.io/test/github/NCKU-CCS/TOC-Project-2020)
-
-
-Template Code for TOC Project 2020
-
-A Line bot based on a finite state machine
-
-More details in the [Slides](https://hackmd.io/@TTW/ToC-2019-Project#) and [FAQ](https://hackmd.io/s/B1Xw7E8kN)
-
-## Setup
-
-### Prerequisite
-* Python 3.6
-* Pipenv
-* Facebook Page and App
-* HTTPS Server
-
-#### Install Dependency
-```sh
-pip3 install pipenv
-
-pipenv --three
-
-pipenv install
-
-pipenv shell
-```
-
-* pygraphviz (For visualizing Finite State Machine)
-    * [Setup pygraphviz on Ubuntu](http://www.jianshu.com/p/a3da7ecc5303)
-	* [Note: macOS Install error](https://github.com/pygraphviz/pygraphviz/issues/100)
-
-
-#### Secret Data
-You should generate a `.env` file to set Environment Variables refer to our `.env.sample`.
-`LINE_CHANNEL_SECRET` and `LINE_CHANNEL_ACCESS_TOKEN` **MUST** be set to proper values.
-Otherwise, you might not be able to run your code.
-
-#### Run Locally
-You can either setup https server or using `ngrok` as a proxy.
-
-#### a. Ngrok installation
-* [ macOS, Windows, Linux](https://ngrok.com/download)
-
-or you can use Homebrew (MAC)
-```sh
-brew cask install ngrok
-```
-
-**`ngrok` would be used in the following instruction**
-
-```sh
-ngrok http 8000
-```
-
-After that, `ngrok` would generate a https URL.
-
-#### Run the sever
-
-```sh
-python3 app.py
-```
-
-#### b. Servo
-
-Or You can use [servo](http://serveo.net/) to expose local servers to the internet.
-
+An interesting RPG game
 
 ## Finite State Machine
 ![fsm](./img/show-fsm.png)
 
-## Usage
-The initial state is set to `user`.
-
-Every time `user` state is triggered to `advance` to another state, it will `go_back` to `user` state after the bot replies corresponding message.
-
-* user
-	* Input: "go to state1"
-		* Reply: "I'm entering state1"
-
-	* Input: "go to state2"
-		* Reply: "I'm entering state2"
-
 ## Deploy
-Setting to deploy webhooks on Heroku.
 
-### Heroku CLI installation
+on Heroku
 
-* [macOS, Windows](https://devcenter.heroku.com/articles/heroku-cli)
+## Usage
 
-or you can use Homebrew (MAC)
-```sh
-brew tap heroku/brew && brew install heroku
-```
+- reply anything to start
+- reply "restart" to restart
 
-or you can use Snap (Ubuntu 16+)
-```sh
-sudo snap install --classic heroku
-```
+## Synopsis
 
-### Connect to Heroku
+老巫師在做研究，不小心打翻藥水到書上有人跑了出來，將老巫師打倒在地開始亂灑藥水。其他跑出來的人也都跑走了。
 
-1. Register Heroku: https://signup.heroku.com
 
-2. Create Heroku project from website
+第二天，老巫師在研究如何收回他們，有人跑進來搶走所有的東西並將老巫師打倒在地還放了把火。
 
-3. CLI Login
 
-	`heroku login`
+老巫師:幫幫我……快點到圖書室找我。
 
-### Upload project to Heroku
+(先去找老巫師)
 
-1. Add local project to Heroku project
+老巫師:請將他們收回書裡，只要拿著他們的書並讓他們自己同意回去後就可以了，但因為昨天的事我手上只剩這本書了。其他的你要自己去找了。
 
-	heroku git:remote -a {HEROKU_APP_NAME}
 
-2. Upload project
+************************************************
+***<h1>Spoiler Alert***</h1>
 
-	```
-	git add .
-	git commit -m "Add code"
-	git push -f heroku master
-	```
+************************************************
 
-3. Set Environment - Line Messaging API Secret Keys
+## Characters
 
-	```
-	heroku config:set LINE_CHANNEL_SECRET=your_line_channel_secret
-	heroku config:set LINE_CHANNEL_ACCESS_TOKEN=your_line_channel_access_token
-	```
+1. 老巫師
+2. 小紅帽(騙子)
+3. 賣火柴的小女孩(無辜)
+4. 大野狼(可憐勞工)
+5. 奶奶(慈愛)
+6. 白雪公主(冒失鬼)
+7. 凱妮絲(笨蛋)
+8. 愛莉絲(怪癖)
 
-4. Your Project is now running on Heroku!
 
-	url: `{HEROKU_APP_NAME}.herokuapp.com/callback`
+## Walkthrough
 
-	debug command: `heroku logs --tail --app {HEROKU_APP_NAME}`
+- **獲得「愛麗絲夢遊仙境」**
 
-5. If fail with `pygraphviz` install errors
+**找愛莉絲**
 
-	run commands below can solve the problems
-	```
-	heroku buildpacks:set heroku/python
-	heroku buildpacks:add --index 1 heroku-community/apt
-	```
+愛莉絲: 我也想回去阿~可是我找不到我的枕頭，一定是昨天跟她出去的時候弄掉了，有枕頭我就回去。
 
-	refference: https://hackmd.io/@ccw/B1Xw7E8kN?type=view#Q2-如何在-Heroku-使用-pygraphviz
+**找小紅帽**
 
-## Reference
-[Pipenv](https://medium.com/@chihsuan/pipenv-更簡單-更快速的-python-套件管理工具-135a47e504f4) ❤️ [@chihsuan](https://github.com/chihsuan)
+小紅帽:不知道~我昨天都沒有遇到愛莉絲阿!我昨天在家聽奶奶念「故事書」呢!然後唸著唸著我們就一起睡著了。
 
-[TOC-Project-2019](https://github.com/winonecheng/TOC-Project-2019) ❤️ [@winonecheng](https://github.com/winonecheng)
+**如找賣火柴的小女孩**
 
-Flask Architecture ❤️ [@Sirius207](https://github.com/Sirius207)
+賣火柴的小女孩:我現在沒有火柴了下次再來吧。
 
-[Line line-bot-sdk-python](https://github.com/line/line-bot-sdk-python/tree/master/examples/flask-echo)
+**如找大野狼**
+
+大野狼:要不要買保險阿!
+
+**如找奶奶**
+
+奶奶:呼……呼……(睡覺中)
+
+如聽到昨天念故事書給小紅帽聽
+則答:是這本吧!呵呵~不過昨天念到一半我就突然睡著了呢!
+
+- **得到「賣火柴的小女孩」。**
+
+
+**如找白雪公主**
+
+白雪公主:真是太瘋狂了!!昨天那個瘋子突然就攻擊我們兩個。害我弄掉了一隻鞋子!希望能被王子撿到!
+
+**如找凱妮絲**
+
+凱妮絲:我正忙打獵找食物呢!
+
+**得到「賣火柴的小女孩」後找小女孩**
+
+小女孩:我的火柴被搶了……如果找的回來我就回去。這個給妳當線索!
+
+- **得到紙條**
+
+紙條:
+
+    19:00白雪跟愛莉絲在逛街，有人突然大喊「站住!我要殺了你!」
+    愛莉絲丟下枕頭逃跑。枕頭被路過的奶奶撿走。
+
+**如找白雪公主**
+
+白雪公主:真是太瘋狂了!!昨天那個瘋子突然就攻擊我們兩個。害我弄掉了一隻鞋子!希望能被王子撿到!
+
+**找奶奶**
+
+奶奶:對阿十年才出門一次的我居然走在路上就被枕頭打到了。這種東西我也不要了送你吧!
+
+- **得到枕頭**
+
+**找愛莉絲**
+
+愛莉絲:謝囉\~\~不過回去之前我想吃點東西!呵呵\~
+
+**如找大野狼**
+
+大野狼:要不要買保險阿!
+
+**如找奶奶**
+
+奶奶:我在等我孫女給我送點吃的呢!
+
+**如找賣火柴的小女孩**
+
+小女孩:你找到我的火柴了嗎??
+
+**如找白雪公主**
+
+白雪:我本來有蘋果的\~\~可是不小心被我弄掉了!
+
+
+**如找老巫師**
+
+老巫師:你一本都還沒收回去阿!!加油吧!
+
+
+
+**如找凱妮絲**
+
+凱妮絲:我只有這個，還有我昨天獵到的這個(爛蘋果)，你要哪一個?
+
+- 得到「好吃的肉」或「爛蘋果」
+
+**拿肉找愛莉絲**
+
+愛莉絲:我吃素的阿你不知道嗎??
+
+**拿爛蘋果找愛莉絲**
+
+愛莉絲:謝囉~~
+
+簽名後回到書中
+
+**【愛莉絲篇任務完成】**
+
+**如找小紅帽**
+
+小紅帽:我有好吃的蛋糕呢!送妳吧(其實有毒)
+愛莉絲得到蛋糕後死亡
+
+**【愛莉絲篇的任務失敗】**
+
+**找老巫師**
+
+老巫師:我有新線索了呢!還有這是昨天現場留下來的!得到箭矢
+
+**如找賣火柴的小女孩**
+
+賣火柴的小女孩:你找到我的火柴了嗎
+ 
+**找凱妮絲**
+
+如問追殺原因
+凱妮絲:我要殺了Snow(史諾)!
+
+- **得到「白雪公主」**
+
+**找白雪公主**
+
+白雪:如果解開誤會我就回去。妳去找證據啦!對了我昨天逃走後晚上有看到小紅帽在撕牆壁上的通緝單喔!那個應該可以用，記得要拿給凱妮絲看喔!
+
+**找小紅帽**
+
+小紅帽:有阿!給你吧
+
+- **得到假傳單**
+
+**如玩家有發現再換對的給玩家**
+
+**拿傳單給凱妮絲**
+
+假傳單:那妳幫我拿這個給白雪說我誤會她了!拿(毒)蘋果給玩家請玩家轉交給凱妮絲
+
+真傳單:謝謝啦~原來是我誤會了，拿這個給白雪幫我道歉吧!蘋果
+
+**找白雪**
+
+拿到毒蘋果就死亡，**【白雪篇失敗】**
+
+拿到蘋果就簽名回書中，**【白雪篇完成】**
+
+**如找大野狼**
+
+大野狼:要不要買保險呢!
+
+**如找奶奶**
+
+奶奶:好期待孫女的點心呢!
+
+**如找凱妮絲**
+
+凱妮絲:我恨你……史諾!
+
+**回去找老巫師**
+
+老巫師:這是我剛剛找到的，給你吧
+得到「飢餓遊戲」
+
+**找凱妮絲**
+
+凱妮絲:我一生中都活在仇恨中，我唯一的願望就是得到來自小女孩的禮物，她們總是讓我想到小櫻。
+
+**如找賣火柴的小女孩**
+
+小女孩:你找到我的火柴了嗎??
+
+**找小紅帽**
+
+小紅帽:有阿我有禮物要給凱妮絲姊姊呢!有兩種喔
+
+白:花錢得到(炸彈)
+
+黑:免費得到
+
+**找凱妮絲**
+
+如黑禮物則凱妮絲簽名回到書中，**【凱妮絲篇成功】**
+
+如白禮物凱妮絲被炸死，**【凱妮絲篇失敗】**
+
+凱妮絲拿到禮物後:謝謝你囉!這是給你的禮物
+
+- **得到照片**
+
+照片:
+
+    小紅帽搶走小女孩的火柴
+
+**找小紅帽**
+小紅帽:是唷!火柴在我手上，裝在這個信封裡
+
+- **得到信封(裡面裝炸藥)**
+
+**找小紅帽**
+
+小紅帽:哎呀~我真是冒失呢!這個才對!
+
+- **得到信封**
+
+**找小女孩**
+**
+如拿到炸藥則小女孩死亡，**【小女孩任務失敗】**
+
+如拿到火柴小女孩簽名回到書中，**【小女孩任務成功】**
+
+小女孩:謝囉!這是給你的禮物!
+
+- **得到「小紅帽」**
+
+**如找小紅帽**
+
+小紅帽:嘻嘻\~\~我還有好多事沒完成呢!幫我把酒送去給我奶奶吧!可是我有兩瓶你要哪一瓶呢??
+
+有毒的酒:無毒
+
+沒毒的酒:有毒
+
+**如找奶奶**
+
+奶奶:我都等不到我孫女要送給我的點心呢!我好期待呀!有好吃的蛋糕跟精緻的禮物!還有我最期待的酒，如果能喝到酒我就回去。
+
+**拿酒給奶奶**
+
+如拿毒酒給奶奶:奶奶死亡，**【奶奶篇失敗】**
+
+如拿酒給奶奶:哪哪簽名回到書中，**【奶奶篇成功】**
+
+奶奶:謝謝妳啊~這是給妳的
+
+- **得到錢、保單(上面寫著受益人小紅帽)**
+
+**如找大野狼**
+
+大野狼:我賣了一個晚上的保險!我昨天好不容易賣給一個老女人!你要買嗎?如果你肯買我就回去
+
+**拿到錢後找大野狼**
+
+大野狼:謝謝你啦~我可以放心的回去了。
+
+**【大野狼篇成功】**
+
+**找小紅帽**
+
+小紅帽:我要我的保單~只要那個老太婆去死我就有錢拿了!
+
+**拿保單給小紅帽**
+
+小紅帽:小紅帽:切!沒成功害死老太婆真不甘心!
+
+**【小紅帽篇成功】**
+
+
+***THE END***
