@@ -7,7 +7,7 @@ An interesting RPG game
 
 ## Deploy
 
-on Heroku
+on AWS
 
 ## Usage
 
