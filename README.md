@@ -2,6 +2,9 @@
 
 An interesting RPG game
 
+## Add Friend
+![fsm](./img/QRcode.jpg)
+
 ## Finite State Machine
 ![fsm](./img/show-fsm.png)
 
